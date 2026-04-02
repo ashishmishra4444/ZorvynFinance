@@ -83,15 +83,19 @@ const TransactionForm = ({ isOpen, onClose, transactionToEdit }) => {
     setIsSubmitting(true);
     
     const payload = { ...formData, amount: Number(formData.amount) };
+    let result;
     
     if (transactionToEdit) {
-      await updateTransaction(payload);
+      result = await updateTransaction(payload);
     } else {
-      await addTransaction(payload);
+      result = await addTransaction(payload);
     }
     
     setIsSubmitting(false);
-    onClose();
+
+    if (result?.success) {
+      onClose();
+    }
   };
 
   const typeOptions = [

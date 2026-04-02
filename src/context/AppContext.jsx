@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { mockApi } from "../services/mockApi";
 
@@ -15,7 +14,6 @@ export const AppProvider = (props) => {
     searchQuery: '',
     type: 'all',
     category: 'all',
-    dateRange: 'all',
     sortBy: 'date-desc',
   });
 
@@ -23,9 +21,6 @@ export const AppProvider = (props) => {
     localStorage.getItem("finance_theme") === "dark"
   );
 
-  const navigate = useNavigate();
-
-  
   useEffect(() => {
     const root = window.document.documentElement; 
     if (isDarkMode) {

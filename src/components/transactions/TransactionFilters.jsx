@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
 import { useAppContext } from '../../hooks/useAppContext';
 
@@ -51,7 +51,7 @@ const CustomDropdown = ({ value, options, onChange }) => {
 };
 
 const TransactionFilters = () => {
-  const { filters, updateFilters } = useAppContext();
+  const { transactions, filters, updateFilters } = useAppContext();
 
   const typeOptions = [
     { value: 'all', label: 'All Types' },
@@ -59,16 +59,16 @@ const TransactionFilters = () => {
     { value: 'expense', label: 'Expense Only' },
   ];
 
-  const categoryOptions = [
-    { value: 'all', label: 'All Categories' },
-    { value: 'Salary', label: 'Salary' },
-    { value: 'Freelance', label: 'Freelance' },
-    { value: 'Groceries', label: 'Groceries' },
-    { value: 'Utilities', label: 'Utilities' },
-    { value: 'Entertainment', label: 'Entertainment' },
-    { value: 'Transport', label: 'Transport' },
-    { value: 'Shopping', label: 'Shopping' },
-  ];
+  const categoryOptions = useMemo(() => {
+    const categories = Array.from(
+      new Set(transactions.map((transaction) => transaction.category).filter(Boolean))
+    ).sort((a, b) => a.localeCompare(b));
+
+    return [
+      { value: 'all', label: 'All Categories' },
+      ...categories.map((category) => ({ value: category, label: category })),
+    ];
+  }, [transactions]);
 
   const sortOptions = [
     { value: 'date-desc', label: 'Newest First' },

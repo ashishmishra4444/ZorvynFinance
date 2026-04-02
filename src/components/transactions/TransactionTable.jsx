@@ -4,7 +4,7 @@ import { formatDate, formatCurrency } from "../../utils/formatters";
 import { useAppContext } from "../../hooks/useAppContext";
 
 const TransactionTable = ({ transactions, onEdit, onDelete }) => {
-  const { role, deleteTransaction } = useAppContext();
+  const { role } = useAppContext();
   const isAdmin = role === "Admin";
 
   if (transactions.length === 0) {

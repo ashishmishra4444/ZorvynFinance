@@ -29,6 +29,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             <span>ZorvynFinance</span>
           </div>
           <button 
+            title="Close navigation menu"
+            aria-label="Close navigation menu"
             className="lg:hidden text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
             onClick={() => setIsOpen(false)}
           >
@@ -43,6 +45,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               <NavLink
                 key={link.name}
                 to={link.path}
+                title={`Go to ${link.name}`}
+                aria-label={`Go to ${link.name}`}
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${

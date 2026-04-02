@@ -5,6 +5,7 @@ import { useAppContext } from '../hooks/useAppContext';
 import SummaryCards from '../components/dashboard/SummaryCards';
 import { TrendChart, ExpenseChart } from '../components/dashboard/Charts';
 import Insights from '../components/dashboard/Insights';
+import RecentTransactions from '../components/dashboard/RecentTransactions';
 import { exportToCSV, exportToJSON } from '../utils/exportData';
 
 const DashboardPage = () => {
@@ -49,12 +50,18 @@ const DashboardPage = () => {
         
         <div className="flex items-center gap-3">
           <button 
+            type="button"
+            title="Export transactions as CSV"
+            aria-label="Export transactions as CSV"
             onClick={() => handleExport('csv')}
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-white border border-gray-300 rounded-lg shadow-sm cursor-pointer hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700"
           >
             <Download className="w-4 h-4" /> CSV
           </button>
           <button 
+            type="button"
+            title="Export transactions as JSON"
+            aria-label="Export transactions as JSON"
             onClick={() => handleExport('json')}
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg shadow-sm cursor-pointer hover:bg-blue-700"
           >
@@ -84,7 +91,14 @@ const DashboardPage = () => {
             </div>
           </div>
 
-          <Insights transactions={transactions} />
+          <div className="grid grid-cols-1 gap-6 mt-8 items-stretch xl:grid-cols-3">
+            <div className="flex xl:col-span-2">
+              <Insights transactions={transactions} />
+            </div>
+            <div className="flex xl:col-span-1 xl:min-h-[236px]">
+              <RecentTransactions transactions={transactions} />
+            </div>
+          </div>
         </>
       )}
     </motion.div>

@@ -3,6 +3,12 @@ import { toast } from "react-toastify";
 import { mockApi } from "../services/mockApi";
 
 export const AppContext = createContext();
+const defaultFilters = {
+  searchQuery: '',
+  type: 'all',
+  category: 'all',
+  sortBy: 'date-desc',
+};
 
 export const AppProvider = (props) => {
   const [transactions, setTransactions] = useState([]);
@@ -10,12 +16,7 @@ export const AppProvider = (props) => {
   const [error, setError] = useState(null);
   const [role, setRole] = useState("Viewer"); 
   
-  const [filters, setFilters] = useState({
-    searchQuery: '',
-    type: 'all',
-    category: 'all',
-    sortBy: 'date-desc',
-  });
+  const [filters, setFilters] = useState(defaultFilters);
 
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem("finance_theme") === "dark"
@@ -126,9 +127,13 @@ export const AppProvider = (props) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
   };
 
+  const resetFilters = () => {
+    setFilters(defaultFilters);
+  };
+
   const value = {
     transactions, loading, error, role, filters, isDarkMode,
-    setRole, setIsDarkMode, toggleRole, toggleTheme, updateFilters,
+    setRole, setIsDarkMode, toggleRole, toggleTheme, updateFilters, resetFilters,
     fetchTransactions, addTransaction, updateTransaction, deleteTransaction,
   };
 

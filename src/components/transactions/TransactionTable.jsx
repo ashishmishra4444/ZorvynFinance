@@ -3,14 +3,32 @@ import { Pencil, Trash2 } from "lucide-react";
 import { formatDate, formatCurrency } from "../../utils/formatters";
 import { useAppContext } from "../../hooks/useAppContext";
 
-const TransactionTable = ({ transactions, onEdit, onDelete }) => {
+const TransactionTable = ({ transactions, onEdit, onDelete, onResetFilters, hasActiveFilters }) => {
   const { role } = useAppContext();
   const isAdmin = role === "Admin";
 
   if (transactions.length === 0) {
     return (
-      <div className="p-8 text-center text-gray-500 bg-white border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700 rounded-xl">
-        No transactions match your current filters.
+      <div className="p-8 text-center bg-white border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700 rounded-xl">
+        <p className="text-gray-700 dark:text-gray-200">
+          {hasActiveFilters ? 'No transactions match your current filters.' : 'No transactions available yet.'}
+        </p>
+        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          {hasActiveFilters
+            ? 'Try adjusting your search, category, type, or sorting choices.'
+            : 'Switch to Admin mode to add your first transaction.'}
+        </p>
+        {hasActiveFilters && (
+          <button
+            type="button"
+            onClick={onResetFilters}
+            title="Clear all active filters"
+            aria-label="Clear all active filters"
+            className="px-4 py-2 mt-4 text-sm font-medium text-blue-600 transition-colors bg-blue-50 rounded-lg hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/40"
+          >
+            Clear filters
+          </button>
+        )}
       </div>
     );
   }
@@ -68,15 +86,18 @@ const TransactionTable = ({ transactions, onEdit, onDelete }) => {
                 <td className="px-6 py-4 text-right">
                   <div className="flex items-center justify-end gap-3">
                     <button
+                      title={`Edit ${tx.category} transaction`}
+                      aria-label={`Edit ${tx.category} transaction from ${formatDate(tx.date)}`}
                       onClick={() => onEdit(tx)}
                       className="text-blue-500 cursor-pointer hover:text-blue-700 dark:text-blue-400"
                     >
                       <Pencil className="w-4 h-4" />
                     </button>
                     <button
+                      title={`Delete ${tx.category} transaction`}
+                      aria-label={`Delete ${tx.category} transaction from ${formatDate(tx.date)}`}
                       onClick={() => onDelete(tx.id)}
                       className="text-red-500 cursor-pointer hover:text-red-700 dark:text-red-400 transition-colors"
-                      title="Delete Transaction"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>

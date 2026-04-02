@@ -7,7 +7,7 @@ A clean, interactive, and responsive finance dashboard built for the Zorvyn Fron
 This application simulates a user's financial activity, allowing them to view high-level summaries, track trends, and manage individual transactions. It was built with a strict focus on frontend modularity—separating the data layer, state management, and UI components.
 
 ### Live Demo & Repository
-* **Live Deployment:** [Insert your Vercel/Netlify link here]
+* **Live Deployment:** [(https://zorvyn-finance-ashish-p.vercel.app/)]
 * **Repository:** [(https://github.com/ashishmishra4444/ZorvynFinance)]
 
 ---

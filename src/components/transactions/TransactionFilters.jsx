@@ -27,7 +27,7 @@ const CustomDropdown = ({ value, options, onChange }) => {
       </div>
 
       {isOpen && (
-        <ul className="absolute z-20 w-full mt-1 overflow-auto bg-white border border-gray-100 rounded-lg shadow-xl max-h-60 dark:bg-gray-800 dark:border-gray-700 py-1">
+        <ul className="custom-scrollbar absolute z-20 w-full mt-1 overflow-auto bg-white border border-gray-100 rounded-lg shadow-xl max-h-60 dark:bg-gray-800 dark:border-gray-700 py-1">
           {options.map((opt) => (
             <li
               key={opt.value}

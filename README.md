@@ -76,7 +76,7 @@ To run this project locally, follow these steps:
 
 1. **Clone the repository:**
    \`\`\`bash
-   git clone [Your Repository URL]
+   git clone [(https://github.com/ashishmishra4444/ZorvynFinance)]
    cd zorvynfinance
    \`\`\`
 

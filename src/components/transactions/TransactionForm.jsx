@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronDown } from 'lucide-react';
 import { useAppContext } from '../../hooks/useAppContext';
+import { toast } from 'react-toastify';
 
 
 const FormDropdown = ({ label, value, options, onChange }) => {
@@ -32,7 +33,7 @@ const FormDropdown = ({ label, value, options, onChange }) => {
       </div>
 
       {isOpen && (
-        <ul className="absolute z-50 w-full mt-1 overflow-auto bg-white border border-gray-100 rounded-lg shadow-xl max-h-48 dark:bg-gray-800 dark:border-gray-700 py-1">
+        <ul className="custom-scrollbar absolute z-50 w-full mt-1 overflow-auto bg-white border border-gray-100 rounded-lg shadow-xl max-h-48 dark:bg-gray-800 dark:border-gray-700 py-1">
           {options.map((opt) => (
             <li
               key={opt.value}
@@ -72,9 +73,15 @@ const TransactionForm = ({ isOpen, onClose, transactionToEdit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const finalAmount = Math.abs(Number(formData.amount));
+    if (finalAmount === 0) {
+      toast.error("Amount must be greater than 0");
+      return;
+    }
+
     setIsSubmitting(true);
     
-    // Ensure amount is stored as a number
     const payload = { ...formData, amount: Number(formData.amount) };
     
     if (transactionToEdit) {

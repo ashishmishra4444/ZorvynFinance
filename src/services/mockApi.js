@@ -1,7 +1,6 @@
 const STORAGE_KEY = 'finance_dashboard_transactions';
-const SIMULATED_DELAY = 600; // 600ms delay to simulate network request
+const SIMULATED_DELAY = 600;
 
-// Initial realistic mock data if localStorage is empty
 const initialData = [
   { id: '1', date: '2023-10-01', amount: 4500, category: 'Salary', type: 'income' },
   { id: '2', date: '2023-10-02', amount: 120.50, category: 'Groceries', type: 'expense' },
@@ -12,35 +11,39 @@ const initialData = [
   { id: '7', date: '2023-10-18', amount: 300.00, category: 'Shopping', type: 'expense' },
 ];
 
-// Helper to simulate network latency
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const mockApi = {
-  // Fetch all transactions
   getTransactions: async () => {
     await delay(SIMULATED_DELAY);
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData));
-      return initialData;
+    
+    
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch (error) {
+      console.error("Failed to parse local storage data, reverting to initial data.", error);
     }
-    return JSON.parse(stored);
+    
+    
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData));
+    return initialData;
   },
 
-  // Add a new transaction
   addTransaction: async (transaction) => {
     await delay(SIMULATED_DELAY);
     const transactions = await mockApi.getTransactions();
     const newTransaction = {
       ...transaction,
-      id: crypto.randomUUID(), // Generate unique ID
+      id: crypto.randomUUID(), 
     };
     const updatedTransactions = [newTransaction, ...transactions];
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedTransactions));
     return newTransaction;
   },
 
-  // Edit an existing transaction
   updateTransaction: async (updatedTransaction) => {
     await delay(SIMULATED_DELAY);
     const transactions = await mockApi.getTransactions();
@@ -51,7 +54,6 @@ export const mockApi = {
     return updatedTransaction;
   },
 
-  // Delete a transaction
   deleteTransaction: async (id) => {
     await delay(SIMULATED_DELAY);
     const transactions = await mockApi.getTransactions();

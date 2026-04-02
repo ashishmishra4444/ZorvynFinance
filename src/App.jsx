@@ -5,13 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useAppContext } from './hooks/useAppContext';
 import PageWrapper from './components/layout/PageWrapper';
 import DashboardPage from './pages/DashboardPage';
+import TransactionsPage from './pages/TransactionPage';
 
-
-const TransactionsPagePlaceholder = () => (
-  <div className="text-2xl font-bold dark:text-white">
-    Transactions View (Coming up..)
-  </div>
-);
 
 function App() {
   const { isDarkMode } = useAppContext();
@@ -22,6 +17,8 @@ function App() {
         theme={isDarkMode ? 'dark' : 'light'} 
         position="bottom-right" 
         autoClose={3000}
+        // Added this line to push the toast away from the bottom and right edges
+        style={{ right: '2rem', bottom: '2rem' }} 
       />
       
       <PageWrapper>
@@ -32,7 +29,7 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           
           
-          <Route path="/transactions" element={<TransactionsPagePlaceholder />} />
+          <Route path="/transactions" element={<TransactionsPage />} />
         </Routes>
       </PageWrapper>
     </>
